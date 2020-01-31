@@ -1,0 +1,34 @@
+	.globl conv
+conv:
+	movb $0,%al
+	leaq -1(%rdi,%rdx),%rdi
+loop:
+	cmp $0,%rdx
+	je endloop
+	movq %rsi,%r9
+	movq %rdi,%r10
+	movq $0,%r11
+	compare:
+		cmp $0,%r9
+		je compare2
+		shr $1,%r9
+		incq %r11
+		jmp compare
+	compare2:
+		cmp $0,%r10
+		je compare3
+		shr $1,%r10
+		incq %r11
+		jmp compare2
+	compare3:
+		cmp $46,%r11
+		jg endloop
+	movq (%rsi),%r8
+	imulq (%rdi),%r8
+	addb %r8b,%al
+	decq %rdi
+	incq %rsi
+	decq %rdx
+	jmp loop
+endloop:
+	ret

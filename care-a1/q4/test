@@ -1,0 +1,178 @@
+int mul (int x, int y){
+	int sum = 0;
+	if(x<y){
+		while(x!=0){
+			int m=x;
+			x=x/2;
+
+			if(m!=(x+x)){
+				sum+=y;
+			}
+			y=y+y;
+		}
+	}
+	else{
+		while(y!=0){
+			int m=y;
+			y=y/2;
+
+			if(m!=(y+y)){
+				sum+=x;
+			}
+			x=x+x;
+		}
+	}
+return sum;
+}
+
+
+
+#include <stdio.h>
+// int  Function(int x,int y)
+int  main()
+{
+    int a = 123;   int  b = 321; //  X*Y
+    // int result = 0;
+    // while(b != 0)
+    // {
+    //     if(1 == (0x01&b))
+    //     {
+    //         result += a;
+    //     }
+    //     a <<= 1;
+    //     b >>= 1;
+    // }
+    // return result;
+    printf("%d\n", b >>= 1);
+}
+
+
+    // # rdi = a
+   
+    // # rsi = b
+   
+    // # rax = a*b
+
+
+
+
+
+
+
+
+
+
+	.globl times
+times:
+	mov $0,%r8
+	cmp %rdi,%rsi
+	jge case
+	jmp case2
+case:
+	mov %rdi,%rax
+	mov %rsi,%r9
+	mov $2,%rcx
+	loop:
+		mov $0,%rdx
+		div %rcx
+		cmp $0,%rdx
+		jg ifcondition
+		jmp endif
+		ifcondition:
+			add %r9,%r8
+		endif:
+			add %r9,%r9
+			cmp $0,%rax
+			je endloop
+		jmp loop
+	endloop:
+	mov %r8,%rax
+	ret
+case2:
+	mov %rsi,%rax
+	mov %rdi,%r9
+	mov $2,%rcx
+	loop2:
+		mov $0,%rdx
+		div %rcx
+		cmp $0,%rdx
+		jg ifcondition2
+		jmp endif2
+		ifcondition2:
+			add %r9,%r8
+		endif2:
+			add %r9,%r9
+			cmp $0,%rax
+			je endloop2
+		jmp loop2
+	endloop2:
+	mov %r8,%rax
+	ret
+
+
+
+
+
+
+
+
+
+
+	.globl times
+times:
+	mov $0,%rax
+	mov %rdi,%r8
+	mov %rsi,%r9
+	mov $1,%r10
+	mov $1,%r11
+	cmp $0,%rdi
+	je endloop
+	cmp $0,%rsi
+	je endloop
+	cmp %r8,%r9
+	jge case
+	jmp case2
+case:
+	loop:
+		cmp %r10,%r8
+		jg ifcondition
+		je equal
+		jl elsecondition
+		ifcondition:
+			mov %r10,%r11
+			mov %r9,%r12
+			add %r9,%r9
+			add %r10,%r10
+			jmp loop
+		equal:
+			add %r9,%rax
+			jmp endloop
+		elsecondition:
+			add %r12,%rax
+			sub %r11,%r8
+			mov $1,%r10
+			mov %rsi,%r9
+			jmp loop
+case2:
+	loop2:
+		cmp %r10,%r9
+		jg ifcondition2
+		je equal2
+		jl elsecondition2
+		ifcondition2:
+			mov %r10,%r11
+			mov %r8,%r12
+			add %r8,%r8
+			add %r10,%r10
+			jmp loop2
+		equal2:
+			add %r8,%rax
+			jmp endloop
+		elsecondition2:
+			add %r12 ,%rax
+			sub %r11,%r9
+			mov $1,%r10
+			mov %rdi,%r8
+			jmp loop2
+endloop:
+	ret
